@@ -7,10 +7,15 @@ then
     echo "Puppet Master is already installed. Exiting..."
 else
     # Install Puppet Master
-    wget https://apt.puppetlabs.com/puppetlabs-release-trusty.deb && \
-    sudo dpkg -i puppetlabs-release-trusty.deb && \
-    sudo apt-get update -yq && sudo apt-get upgrade -yq && \
-    sudo apt-get install -yq puppetmaster
+#    wget https://apt.puppetlabs.com/puppetlabs-release-trusty.deb && \
+#    sudo dpkg -i puppetlabs-release-trusty.deb && \
+#    sudo apt-get update -yq && sudo apt-get upgrade -yq && \
+#    sudo apt-get install -yq puppetmaster
+
+    sudo rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+    sudo rpm -ivh https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
+    sudo yum install puppet-server
+
 
     # Configure /etc/hosts file
     echo "" | sudo tee --append /etc/hosts 2> /dev/null && \

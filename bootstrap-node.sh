@@ -6,14 +6,17 @@ if ps aux | grep "puppet agent" | grep -v grep 2> /dev/null
 then
     echo "Puppet Agent is already installed. Moving on..."
 else
-    sudo apt-get install -yq puppet
+#    sudo apt-get install -yq puppet
+    sudo rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+    sudo rpm -ivh https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
+    sudo yum install puppet -y
 fi
 
 if cat /etc/crontab | grep puppet 2> /dev/null
 then
     echo "Puppet Agent is already configured. Exiting..."
 else
-    sudo apt-get update -yq && sudo apt-get upgrade -yq
+#    sudo apt-get update -yq && sudo apt-get upgrade -yq
 
     sudo puppet resource cron puppet-agent ensure=present user=root minute=30 \
         command='/usr/bin/puppet agent --onetime --no-daemonize --splay'
